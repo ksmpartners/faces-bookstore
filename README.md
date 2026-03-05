@@ -83,10 +83,12 @@ Customer information should be stored and must include:
 
 A data flow diagram in the starter material illustrates how data moves between different parts of the application. Your implementation should follow the same general flow and layering when designing controllers, services, DAOs, and views.
 
+![Data Flow](dataflow.png)
+
 ### Security Requirements
 
 - Only the administrative functionality requires authentication and authorization.  
-- Security should be implemented using JAAS; it is acceptable to use JBoss `.properties` files or the default security domain.  
+- Security should be implemented using JAAS; it is acceptable to use Wildfly `.properties` files or the default security domain.  
 - Returning users do not need to authenticate; providing an email address is sufficient for this pseudo application.  
 - Secured pages and functionality must not be accessible without proper authentication and authorization.  
 
@@ -107,7 +109,7 @@ A starter project is provided that includes the necessary dependencies. Addition
 - PrimeFaces  
 - SLF4J  
 - H2 in-memory database (via the `ExampleDS` data source)  
-- JBoss EAP 7.1 application server  
+- [WildFly 26](https://github.com/wildfly/wildfly/releases/download/26.1.3.Final/wildfly-26.1.3.Final.zip) application server  
 
 ## Development Guidelines
 
@@ -127,14 +129,14 @@ An original version of this project is stored in Git. To start working:
 2. Clone your branch locally:
 
 ```bash
-git clone https://git.pjm.com/java/products/misc/education/bookstore.git
+git clone https://github.com/ksmpartners/faces-bookstore
 cd bookstore
 git checkout -b yourname-bookstore origin/yourname-bookstore
 ```
 
 3. Use `git branch --list` or `git status` to verify that you are on the correct branch.  
 4. Import the project into Eclipse as an existing Maven project.  
-5. The project should build and deploy to a stock JBoss EAP 7.1 standalone configuration. It is configured to use the existing `ExampleDS` data source and the `other` security domain.  
+5. The project should build and deploy to a stock [WildFly 26](https://github.com/wildfly/wildfly/releases/download/26.1.3.Final/wildfly-26.1.3.Final.zip) standalone configuration. It is configured to use the existing `ExampleDS` data source and the `other` security domain.  
 6. In the project `pom.xml`, update the PrimeFaces dependency to the latest version available internally.  
 
 ## Evaluation
@@ -165,14 +167,14 @@ This provides constructive feedback and helps leadership evaluate the developerâ
 
 ## Local Development â€“ Setup
 
-### JBoss Download
+### Wildfly Download
 
-1. Open your browser and navigate to the internal Nexus location for JBoss to download the latest server:  
-   `https://nexus.KSM.com/nexus/#browse/browse:cie-dis-products-software:software%2Fjboss`
+1. Open your browser and navigate to the internal Nexus location for Wildfly to download the latest server:  
+   [WildFly 26](https://github.com/wildfly/wildfly/releases/download/26.1.3.Final/wildfly-26.1.3.Final.zip)
 2. Expand the folder with the most recent version number and click on the ZIP file.  
 3. In the metadata panel, click the link for the **Path** attribute.  
-4. The latest JBoss distribution will start downloading to your `Downloads` folder.  
-5. Once the download is finished, extract the contents to a directory of your choosing (for example, `C:\Personal\TOOLS\jboss-eap-7.1`).  
+4. The latest Wildfly distribution will start downloading to your `Downloads` folder.  
+5. Once the download is finished, extract the contents to a directory of your choosing (for example, `C:\tools\wildfly-26`).  
 
 ### Add Users to JBoss
 
