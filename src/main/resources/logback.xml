@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+	<contextName>${project.artifactId}</contextName>
+
+	<!-- always a good idea to install OnConsoleStatusListener -->
+	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${jboss.server.log.dir}/${jboss.server.name}/log/${project.artifactId}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${jboss.server.log.dir}/${jboss.server.name}/log/${project.artifactId}-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+			<!-- each file should be at most 500MB, keep 14 days worth of history, but at most 20GB -->
+			<maxFileSize>500MB</maxFileSize>
+			<maxHistory>14</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="com.pjm.web.logging.SplunkLayout">
+				<application>BOOKSTORE</application>
+				<printThreadName>true</printThreadName>
+				<printHttpHeaders>true</printHttpHeaders>
+			</layout>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNCFILE" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>512</queueSize>
+		<appender-ref ref="FILE" />
+	</appender>
+
+	<logger name="com.pjm" level="${logging.mode}" />
+	<logger name="org.apache.commons.beanutils" level="ERROR" />
+
+	<root level="${logging.mode}" >
+		<appender-ref ref="ASYNCFILE" />
+	</root>
+</configuration>

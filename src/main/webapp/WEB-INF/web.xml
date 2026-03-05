@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<web-app version="3.1"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+  	
+  	<display-name>Bookstore</display-name>
+  	  	
+  	<context-param>
+    	<param-name>javax.faces.PROJECT_STAGE</param-name>
+    	<param-value>${jsf.stage}</param-value>
+  	</context-param>
+  	
+	<context-param>
+    	<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+    	<param-value>true</param-value>
+	</context-param>
+	  
+	<context-param>
+	    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+	    <param-value>true</param-value>
+	</context-param>
+ 	  
+	<session-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+ 
+  	<!-- Protect all admin pages -->
+  	<security-constraint>
+        <display-name>UI Admin Pages</display-name>
+    	<web-resource-collection>
+      		<web-resource-name>Admin Pages</web-resource-name>
+      		<url-pattern>/pages/admin/*</url-pattern>
+    	</web-resource-collection>
+    	<auth-constraint>
+      		<role-name>Admin</role-name>
+    	</auth-constraint>
+  	</security-constraint>
+  	
+	<!-- Protect all secure pages -->
+	<security-constraint>
+      <display-name>UI Restricted Pages</display-name>
+	  <web-resource-collection>
+	    <web-resource-name>Restricted Pages</web-resource-name>
+	    <url-pattern>/pages/secure/*</url-pattern>
+	  </web-resource-collection>
+	  <auth-constraint>
+	    <role-name>General</role-name>
+	  </auth-constraint>
+	</security-constraint>
+		
+	<!-- FORM based authentication as a fallback to SSO. Required for Picketlink SSO -->
+	<login-config>
+	  <auth-method>FORM</auth-method>
+	  <realm-name>PJM</realm-name>
+	  <form-login-config>
+		<form-login-page>/pages/login/login.jsf</form-login-page>
+	    <form-error-page>/pages/login/login-error.jsf</form-error-page>
+	  </form-login-config>
+	</login-config>
+	<!-- Declare roles -->
+	<security-role>
+	  <description>Administrator Role</description>
+	  <role-name>Admin</role-name>
+	</security-role>
+	<security-role>
+	  <description>Read-Write Role</description>
+	  <role-name>General</role-name>
+	</security-role>
+
+</web-app>

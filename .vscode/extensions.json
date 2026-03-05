@@ -1,0 +1,8 @@
+    {
+    "recommendations": [
+        "vscjava.vscode-java-pack",
+        "flipwarthog.faces-intellisense",
+        "yigitfindikli.primeflexsnippets",
+        "redhat.vscode-server-connector"
+    ]
+}

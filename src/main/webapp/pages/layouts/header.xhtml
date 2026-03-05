@@ -1,0 +1,21 @@
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<title>Bookstore Sample Application</title>
+	<h:head>
+		<p:panelGrid columns="12" styleClass="bookstoreHeaderGrid">
+			<p:spacer/>
+			<p:commandLink value="PJM Bookstore" action="home" styleClass="bookstoreHeader"/>
+			<p:commandLink value="Login" action="login" rendered="#{!userProvider.userLoggedIn}"/>
+			<p:commandLink value="Logout" action="#{userProvider.logout()}" rendered="#{userProvider.userLoggedIn}"/>
+			<p:commandLink value="Admin" action="admin" rendered="#{userProvider.adminUser}"/>
+			<p:outputLabel value="Welcome: #{userProvider.userName}" rendered="#{userProvider.userLoggedIn}"/>
+		</p:panelGrid>
+	</h:head>
+</ui:composition>

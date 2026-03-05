@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+	<contextName>Bookstore</contextName>
+	<jmxConfigurator/> 
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender" >
+		<file>target/bookstore.log</file>
+		<append>false</append>
+		<encoder>
+			<pattern>%d{MMM dd yyyy HH:mm:ss.SSS z} %-5level - [%X{id}~%X{serverip}] %logger{35} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.gargoyle">
+        <level value="INFO" />
+    </logger>
+    <logger name="org.apache.http">
+        <level value="INFO" />
+    </logger>
+	<logger name="org.hibernate">
+		<level value="INFO" />
+	</logger>
+	<logger name="com.pjm">
+		<level value="DEBUG" />
+	</logger>
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
