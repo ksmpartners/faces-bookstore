@@ -83,6 +83,8 @@ Customer information should be stored and must include:
 
 A data flow diagram in the starter material illustrates how data moves between different parts of the application. Your implementation should follow the same general flow and layering when designing controllers, services, DAOs, and views.
 
+![Data Flow](dataflow.png)
+
 ### Security Requirements
 
 - Only the administrative functionality requires authentication and authorization.  
@@ -127,7 +129,7 @@ An original version of this project is stored in Git. To start working:
 2. Clone your branch locally:
 
 ```bash
-git clone https://git.pjm.com/java/products/misc/education/bookstore.git
+git clone https://github.com/ksmpartners/faces-bookstore
 cd bookstore
 git checkout -b yourname-bookstore origin/yourname-bookstore
 ```
