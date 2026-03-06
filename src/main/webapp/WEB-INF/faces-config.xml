@@ -14,7 +14,7 @@
    <!-- Resource Bundles -->
    <application>
       <resource-bundle>
-         <base-name>com.pjm.web.ui.application</base-name>
+         <base-name>com.ksm.web.ui.application</base-name>
          <var>appmsg</var>
       </resource-bundle>
    </application>

@@ -7,11 +7,11 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:p="http://primefaces.org/ui">
 
-	<title>Bookstore Sample Application</title>
+	<title>KSM Bookstore Application</title>
 	<h:head>
 		<p:panelGrid columns="12" styleClass="bookstoreHeaderGrid">
 			<p:spacer/>
-			<p:commandLink value="PJM Bookstore" action="home" styleClass="bookstoreHeader"/>
+			<p:commandLink value="KSM Bookstore" action="home" styleClass="bookstoreHeader"/>
 			<p:commandLink value="Login" action="login" rendered="#{!userProvider.userLoggedIn}"/>
 			<p:commandLink value="Logout" action="#{userProvider.logout()}" rendered="#{userProvider.userLoggedIn}"/>
 			<p:commandLink value="Admin" action="admin" rendered="#{userProvider.adminUser}"/>

@@ -2,8 +2,8 @@
 <site xmlns="http://maven.apache.org/SITE/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd">
 
-	<bannerLeft href="http://www.pjm.com/" target="_blank">
-		<image src="images/pjm.png" height="96"/>
+	<bannerLeft href="http://www.ksmpartners.com/" target="_blank">
+		<image src="images/ksm.png" height="96"/>
 	</bannerLeft>
 
 	<skin>
@@ -17,7 +17,7 @@
 	<body>
 		<head>
 			<![CDATA[
-              <meta name="keywords" content="PJM"/>
+              <meta name="keywords" content="KSM"/>
               <link rel="icon" href="favicon.ico"/>
               <link rel="shortcut icon" href="favicon.ico"/>
 			]]>
