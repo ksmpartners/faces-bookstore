@@ -1,47 +1,46 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" 
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ksm</groupId>
 	<artifactId>bookstore</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>quarkus</packaging>
 	<name>KSM Faces Bookstore</name>
 	<description>A psuedo startup project used in Faces application training</description>
 	<inceptionYear>2013</inceptionYear>
-    <organization>
-        <name>KSM Technology Partners</name>
-        <url>https://www.ksmpartners.com</url>
-    </organization>
-    <licenses>
-        <license>
-            <name>Commercial Confidential</name>
-            <url>https://www.ksmpartners.com</url>
-            <distribution>manual</distribution>
-            <comments>Commercial Confidential</comments>
-        </license>
-    </licenses>
+	<organization>
+		<name>KSM Technology Partners</name>
+		<url>https://www.ksmpartners.com</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Commercial Confidential</name>
+			<url>https://www.ksmpartners.com</url>
+			<distribution>manual</distribution>
+			<comments>Commercial Confidential</comments>
+		</license>
+	</licenses>
 	<properties>
 		<build.output>target</build.output>
 		<!-- Global Properties -->
-		<maven.compiler.release>11</maven.compiler.release>
+		<maven.compiler.release>25</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Necessary Dependencies -->
 		<commons-io.version>2.21.0</commons-io.version>
 		<commons-lang.version>3.20.0</commons-lang.version>
 		<commons-logging.version>1.3.5</commons-logging.version>
-		<hibernate.jpa.version>4.3.6.Final</hibernate.jpa.version>
-		<hibernate.core.version>4.2.14.Final</hibernate.core.version>
-		<jdk.version>11</jdk.version>
+		<jdk.version>25</jdk.version>
+		<myfaces.version>4.1.4</myfaces.version>
+		<omnifaces-quarkus.version>5.5.3</omnifaces-quarkus.version>
+		<primefaces-quarkus.version>4.16.0</primefaces-quarkus.version>
+		<quarkus.version>3.39.3</quarkus.version>
 		<mockito.version>5.20.0</mockito.version>
-		<omnifaces.version>3.14.12</omnifaces.version>
 		<primefaces-optimizer.version>2.6.5</primefaces-optimizer.version>
-		<primefaces.version>15.0.13</primefaces.version>
 		<resources.plugin>3.1.0</resources.plugin>
 		<slf4j.version>2.0.17</slf4j.version>
 		<testng.version>7.11.0</testng.version>
-		<war.plugin>3.2.0</war.plugin>
 		<!-- Code Cleanliness Reports -->
 		<jacoco.version>0.8.14</jacoco.version>
 		<spotbugs.impl.version>4.9.8</spotbugs.impl.version>
@@ -56,55 +55,66 @@
 		<maven-site-plugin.version>3.21.0</maven-site-plugin.version>
 		<maven-spotbugs-plugin.version>4.9.8.2</maven-spotbugs-plugin.version>
 		<maven-taglist-plugin.version>3.2.2</maven-taglist-plugin.version>
-	</properties>	
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.quarkus.platform</groupId>
+				<artifactId>quarkus-bom</artifactId>
+				<version>${quarkus.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
+		<!-- Quarkus -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-rest-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-hibernate-validator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-cache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-health</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-info</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>${commons-logging.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Faces -->
 		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>${primefaces.version}</version>
-			<scope>compile</scope>
+			<groupId>org.apache.myfaces.core.extensions.quarkus</groupId>
+			<artifactId>myfaces-quarkus</artifactId>
+			<version>${myfaces.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>${hibernate.jpa.version}</version>
-			<scope>provided</scope>
+			<groupId>io.quarkiverse.primefaces</groupId>
+			<artifactId>quarkus-primefaces</artifactId>
+			<version>${primefaces-quarkus.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.core.version}</version>
-			<scope>provided</scope>
+			<groupId>io.quarkiverse.primefaces</groupId>
+			<artifactId>quarkus-primefaces-extensions</artifactId>
+			<version>${primefaces-quarkus.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
-			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.omnifaces</groupId>
-			<artifactId>omnifaces</artifactId>
-			<version>${omnifaces.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.spec</groupId>
-			<artifactId>jboss-javaee-web-6.0</artifactId>
-			<version>2.0.0.Final</version>
-			<type>pom</type>
-			<scope>provided</scope>
+			<groupId>io.quarkiverse.omnifaces</groupId>
+			<artifactId>quarkus-omnifaces</artifactId>
+			<version>${omnifaces-quarkus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -140,6 +150,7 @@
 					<artifactId>junit</artifactId>
 				</exclusion>
 			</exclusions>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -151,7 +162,6 @@
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
-					<compilerVersion>${jdk.version}</compilerVersion>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -216,9 +226,6 @@
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>${maven-pmd-plugin.version}</version>
 				<configuration>
-					<rulesets>
-						<ruleset>/rulesets/pjm-pmd-rules.xml</ruleset>
-					</rulesets>
 					<aggregate>true</aggregate>
 					<minimumTokens>100</minimumTokens>
 					<linkXref>true</linkXref>
@@ -261,12 +268,13 @@
 						<artifactId>pmd-jsp</artifactId>
 						<version>${pmd.version}</version>
 					</dependency>
-					<dependency>
-						<groupId>com.pjm.web</groupId>
-						<artifactId>pjm-web-build-tools</artifactId>
-						<version>7.4.24</version>
-					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>io.quarkus</groupId>
+				<artifactId>quarkus-maven-plugin</artifactId>
+				<version>${quarkus.version}</version>
+				<extensions>true</extensions>
 			</plugin>
 		</plugins>
 		<resources>
@@ -449,10 +457,6 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-resources-plugin</artifactId>
 					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-war-plugin</artifactId>
-					</plugin>
 				</plugins>
 				<pluginManagement>
 					<plugins>
@@ -505,35 +509,6 @@
 								</resourcesSets>
 							</configuration>
 						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-war-plugin</artifactId>
-							<version>${war.plugin}</version>
-							<configuration>
-								<archive>
-									<manifest>
-										<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-										<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-									</manifest>
-									<manifestEntries>
-										<URL>${project.url}</URL>
-										<Implementation-Build>${buildNumber}</Implementation-Build>
-									</manifestEntries>
-								</archive>
-								<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
-								<packagingExcludes>WEB-INF/lib/commons-lang-2*.jar,WEB-INF/lib/commons-collections-*.jar</packagingExcludes>
-								<webappDirectory>${project.build.directory}/webapp</webappDirectory>
-								<warSourceDirectory>${project.basedir}/src/main/webapp</warSourceDirectory>
-								<webappDirectory>${project.build.directory}/webapp</webappDirectory>
-								<warSourceDirectory>${project.basedir}/src/main/webapp</warSourceDirectory>
-								<warSourceExcludes>**/resources/**/*.css,**/resources/**/*.js</warSourceExcludes>
-								<webResources>
-									<resource>
-										<directory>${project.build.directory}/generated-webapp</directory>
-									</resource>
-								</webResources>
-							</configuration>
-						</plugin>
 					</plugins>
 				</pluginManagement>
 			</build>
@@ -579,5 +554,5 @@
 				<build.output>target-ide</build.output>
 			</properties>
 		</profile>
-	</profiles>	
+	</profiles>
 </project>
