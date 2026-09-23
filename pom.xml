@@ -7,7 +7,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>quarkus</packaging>
 	<name>KSM Faces Bookstore</name>
-	<description>A psuedo startup project used in Faces application training</description>
+	<description>A pseudo startup project used in Faces application training</description>
 	<inceptionYear>2013</inceptionYear>
 	<organization>
 		<name>KSM Technology Partners</name>
@@ -28,33 +28,33 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Necessary Dependencies -->
-		<commons-io.version>2.21.0</commons-io.version>
+		<commons-io.version>2.22.0</commons-io.version>
 		<commons-lang.version>3.20.0</commons-lang.version>
-		<commons-logging.version>1.3.5</commons-logging.version>
+		<commons-logging.version>1.4.0</commons-logging.version>
 		<jdk.version>25</jdk.version>
 		<myfaces.version>4.1.4</myfaces.version>
 		<omnifaces-quarkus.version>5.5.3</omnifaces-quarkus.version>
 		<primefaces-quarkus.version>4.16.0</primefaces-quarkus.version>
 		<quarkus.version>3.39.3</quarkus.version>
-		<mockito.version>5.20.0</mockito.version>
-		<primefaces-optimizer.version>2.6.5</primefaces-optimizer.version>
-		<resources.plugin>3.1.0</resources.plugin>
-		<slf4j.version>2.0.17</slf4j.version>
-		<testng.version>7.11.0</testng.version>
+		<mockito.version>5.23.0</mockito.version>
+		<primefaces-optimizer.version>2.7.9</primefaces-optimizer.version>
+		<resources.plugin>3.5.0</resources.plugin>
+		<slf4j.version>2.0.19</slf4j.version>
+		<testng.version>7.12.0</testng.version>
 		<!-- Code Cleanliness Reports -->
-		<jacoco.version>0.8.14</jacoco.version>
-		<spotbugs.impl.version>4.9.8</spotbugs.impl.version>
-		<surefire.version>3.5.4</surefire.version>
-		<pmd.version>7.18.0</pmd.version>
+		<jacoco.version>0.8.15</jacoco.version>
+		<spotbugs.impl.version>4.10.4.1</spotbugs.impl.version>
+		<surefire.version>3.6.0</surefire.version>
+		<pmd.version>7.27.0</pmd.version>
 		<!-- Maven Plugins -->
-		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
 		<maven-jxr-plugin.version>3.6.0</maven-jxr-plugin.version>
 		<maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
 		<maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
-		<maven-site-plugin.version>3.21.0</maven-site-plugin.version>
-		<maven-spotbugs-plugin.version>4.9.8.2</maven-spotbugs-plugin.version>
-		<maven-taglist-plugin.version>3.2.2</maven-taglist-plugin.version>
+		<maven-site-plugin.version>3.22.0</maven-site-plugin.version>
+		<maven-spotbugs-plugin.version>4.10.4.1</maven-spotbugs-plugin.version>
+		<maven-taglist-plugin.version>3.2.3</maven-taglist-plugin.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
