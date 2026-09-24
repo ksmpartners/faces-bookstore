@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ksm</groupId>
 	<artifactId>bookstore</artifactId>
@@ -28,22 +27,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Necessary Dependencies -->
-		<commons-io.version>2.22.0</commons-io.version>
-		<commons-lang.version>3.20.0</commons-lang.version>
-		<commons-logging.version>1.4.0</commons-logging.version>
-		<jdk.version>25</jdk.version>
 		<myfaces.version>4.1.4</myfaces.version>
 		<omnifaces-quarkus.version>5.5.3</omnifaces-quarkus.version>
 		<primefaces-quarkus.version>4.16.0</primefaces-quarkus.version>
-		<quarkus.version>3.39.3</quarkus.version>
-		<mockito.version>5.23.0</mockito.version>
+		<quarkus.version>3.39.5</quarkus.version>
 		<primefaces-optimizer.version>2.7.9</primefaces-optimizer.version>
-		<resources.plugin>3.5.0</resources.plugin>
-		<slf4j.version>2.0.19</slf4j.version>
-		<testng.version>7.12.0</testng.version>
 		<!-- Code Cleanliness Reports -->
 		<jacoco.version>0.8.15</jacoco.version>
-		<spotbugs.impl.version>4.10.4.1</spotbugs.impl.version>
 		<surefire.version>3.6.0</surefire.version>
 		<pmd.version>7.27.0</pmd.version>
 		<!-- Maven Plugins -->
@@ -71,7 +61,7 @@
 		<!-- Quarkus -->
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-rest-jackson</artifactId>
+			<artifactId>quarkus-cache</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -79,21 +69,29 @@
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-cache</artifactId>
+			<artifactId>quarkus-info</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-rest-jackson</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-smallrye-health</artifactId>
 		</dependency>
+		<!-- Persistence -->
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-info</artifactId>
+			<artifactId>quarkus-hibernate-orm</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>${commons-logging.version}</version>
-			<scope>provided</scope>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-jdbc-h2</artifactId>
+		</dependency>
+		<!-- Security -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-elytron-security-properties-file</artifactId>
 		</dependency>
 		<!-- Faces -->
 		<dependency>
@@ -116,40 +114,29 @@
 			<artifactId>quarkus-omnifaces</artifactId>
 			<version>${omnifaces-quarkus.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang.version}</version>
-			<scope>compile</scope>
-		</dependency>
+		<!-- Utilities -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>compile</scope>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<!-- Test -->
 		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>${mockito.version}</version>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${testng.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit-mockito</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -157,24 +144,23 @@
 		<directory>${build.output}</directory>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
+					<parameters>true</parameters>
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire.version}</version>
 				<configuration>
-					<skipTests>false</skipTests>
-					<forkCount>4</forkCount>
-					<reuseForks>true</reuseForks>
-					<useSystemClassLoader>true</useSystemClassLoader>
-					<testFailureIgnore>false</testFailureIgnore>
-					<failIfNoTests>true</failIfNoTests>
+					<argLine>@{argLine} --enable-native-access=ALL-UNNAMED</argLine>
+					<systemPropertyVariables>
+						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+						<maven.home>${maven.home}</maven.home>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -240,11 +226,11 @@
 						<exclude>**/rest/template/**/*.java</exclude>
 					</excludes>
 					<excludeRoots>
-						<excludeRoot>${basedir}/target/generated-sources</excludeRoot>
-						<excludeRoot>${basedir}/target/generated-sources/annotations</excludeRoot>
-						<excludeRoot>${basedir}/target/generated-sources/xjc</excludeRoot>
-						<excludeRoot>${basedir}/target/generated-sources/cxf</excludeRoot>
-						<excludeRoot>${basedir}/target/generated-sources/querydsl</excludeRoot>
+						<excludeRoot>${project.basedir}/target/generated-sources</excludeRoot>
+						<excludeRoot>${project.basedir}/target/generated-sources/annotations</excludeRoot>
+						<excludeRoot>${project.basedir}/target/generated-sources/xjc</excludeRoot>
+						<excludeRoot>${project.basedir}/target/generated-sources/cxf</excludeRoot>
+						<excludeRoot>${project.basedir}/target/generated-sources/querydsl</excludeRoot>
 					</excludeRoots>
 				</configuration>
 				<dependencies>
@@ -271,6 +257,25 @@
 				</dependencies>
 			</plugin>
 			<plugin>
+				<groupId>org.primefaces.extensions</groupId>
+				<artifactId>resources-optimizer-maven-plugin</artifactId>
+				<version>${primefaces-optimizer.version}</version>
+				<configuration>
+					<inputDir>${project.build.directory}/classes/META-INF/resources</inputDir>
+					<imagesDir>${project.build.directory}/classes/META-INF/resources</imagesDir>
+					<useDataUri>false</useDataUri>
+				</configuration>
+				<executions>
+					<execution>
+						<id>optimize</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>optimize</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>io.quarkus</groupId>
 				<artifactId>quarkus-maven-plugin</artifactId>
 				<version>${quarkus.version}</version>
@@ -278,9 +283,22 @@
 			</plugin>
 		</plugins>
 		<resources>
+			<!-- Only filter properties and xml so pages, css and images are copied untouched -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/*.properties</exclude>
+					<exclude>**/*.xml</exclude>
+				</excludes>
+			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
 			</resource>
 		</resources>
 	</build>
@@ -311,6 +329,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${maven-pmd-plugin.version}</version>
 				<configuration>
 					<linkXRef>true</linkXRef>
 				</configuration>
@@ -345,10 +364,10 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>${surefire.version}</version>
 				<configuration>
-					<inherited>true</inherited>
 					<aggregate>false</aggregate>
 				</configuration>
 				<reportSets>
@@ -370,21 +389,7 @@
 					<spotbugsXmlOutput>true</spotbugsXmlOutput>
 					<!-- Optional directory to put findbugs xml report -->
 					<spotbugsXmlOutputDirectory>target/site</spotbugsXmlOutputDirectory>
-					<omitVisitors>FindReturnRef,UnreadFields,FindNonSerializableStoreIntoSession,FindUseOfNonSerializableValue,SerializableIdiom,StaticLoggerDetector </omitVisitors>
-					<dependencies>
-						<dependency>
-							<groupId>com.github.spotbugs</groupId>
-							<artifactId>spotbugs</artifactId>
-							<version>${spotbugs.impl.version}</version>
-						</dependency>
-					</dependencies>
-					<plugins>
-						<plugin>
-							<groupId>jp.skypencil.findbugs.slf4j</groupId>
-							<artifactId>bug-pattern</artifactId>
-							<version>1.5.0</version>
-						</plugin>
-					</plugins>
+					<omitVisitors>FindReturnRef,UnreadFields,FindNonSerializableStoreIntoSession,FindUseOfNonSerializableValue,SerializableIdiom,StaticLoggerDetector</omitVisitors>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -441,108 +446,6 @@
 		</plugins>
 	</reporting>
 	<profiles>
-		<profile>
-			<id>default</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<logging.mode>INFO</logging.mode>
-				<jpa.showsql>false</jpa.showsql>
-				<jsf.stage>Production</jsf.stage>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-resources-plugin</artifactId>
-					</plugin>
-				</plugins>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-resources-plugin</artifactId>
-							<version>${resources.plugin}</version>
-							<executions>
-								<execution>
-									<id>copy-resources</id>
-									<phase>generate-resources</phase>
-									<goals>
-										<goal>copy-resources</goal>
-									</goals>
-									<configuration>
-										<outputDirectory>${project.build.directory}/generated-webapp/resources</outputDirectory>
-										<resources>
-											<resource>
-												<directory>${project.basedir}/src/main/webapp/resources</directory>
-												<filtering>true</filtering>
-												<includes>
-													<include>**/*.css</include>
-													<include>**/*.js</include>
-												</includes>
-											</resource>
-										</resources>
-									</configuration>
-								</execution>
-							</executions>
-						</plugin>
-						<plugin>
-							<groupId>org.primefaces.extensions</groupId>
-							<artifactId>resources-optimizer-maven-plugin</artifactId>
-							<version>${primefaces-optimizer.version}</version>
-							<executions>
-								<execution>
-									<id>optimize</id>
-									<phase>prepare-package</phase>
-									<goals>
-										<goal>optimize</goal>
-									</goals>
-								</execution>
-							</executions>
-							<configuration>
-								<useDataUri>true</useDataUri>
-								<resourcesSets>
-									<resourcesSet>
-										<inputDir>${project.build.directory}/generated-webapp</inputDir>
-									</resourcesSet>
-								</resourcesSets>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-		<profile>
-			<id>development</id>
-			<properties>
-				<logging.mode>DEBUG</logging.mode>
-				<jpa.showsql>true</jpa.showsql>
-				<jsf.stage>Development</jsf.stage>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>${war.plugin}</version>
-						<configuration>
-							<archive>
-								<manifest>
-									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-									<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-								</manifest>
-								<manifestEntries>
-									<URL>${project.url}</URL>
-								</manifestEntries>
-							</archive>
-							<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
-							<packagingExcludes>WEB-INF/lib/commons-lang-2*.jar,WEB-INF/lib/commons-collections-*.jar,WEB-INF/lib/stax-api-*.jar</packagingExcludes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 		<profile>
 			<id>vscode</id>
 			<activation>

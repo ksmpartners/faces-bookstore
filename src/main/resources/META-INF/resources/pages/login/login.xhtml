@@ -13,7 +13,7 @@
     </h:head>
  	<ui:define name="body">
         <h2>Hello, please log in:</h2>
-        <form name="loginForm" method="post" action="j_security_check">
+        <form name="loginForm" method="post" action="#{request.contextPath}/j_security_check">
             <p><strong>Please type your user name: </strong>
                 <input type="text" name="j_username" size="25"/></p>
             <p><strong>Please type your password: </strong>

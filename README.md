@@ -88,7 +88,7 @@ A data flow diagram in the starter material illustrates how data moves between d
 ### Security Requirements
 
 - Only the administrative functionality requires authentication and authorization.  
-- Security should be implemented using JAAS; it is acceptable to use Wildfly `.properties` files or the default security domain.  
+- Security should be implemented using Quarkus security (FORM login is pre-configured with embedded users in `application.properties`).  
 - Returning users do not need to authenticate; providing an email address is sufficient for this pseudo application.  
 - Secured pages and functionality must not be accessible without proper authentication and authorization.  
 
@@ -107,8 +107,8 @@ A starter project is provided that includes the necessary dependencies. Addition
 - JPA (Persistence/Hibernate)  
 - JSF
 - PrimeFaces  
-- SLF4J  
-- H2 in-memory database (via the `ExampleDS` data source)  
+- JBoss Logging (`org.jboss.logging.Logger`, the Quarkus standard)  
+- H2 in-memory database (the default Quarkus datasource)  
 - Quarkus
 
 ## Development Guidelines
@@ -168,8 +168,28 @@ This provides constructive feedback and helps leadership evaluate the developerâ
 
 ### Add Users
 
-TBD
+Users and roles are defined in `src/main/resources/application.properties` using Quarkus embedded users:
+
+| User  | Password | Roles          |
+|-------|----------|----------------|
+| admin | admin    | Admin, General |
+| user  | user     | General        |
+
+Add more with `quarkus.security.users.embedded.users.<name>=<password>` and `quarkus.security.users.embedded.roles.<name>=<roles>`.
+Pages under `/pages/admin/*` require `Admin` and pages under `/pages/secure/*` require `General` (see `quarkus.http.auth.permission.*`).
 
 ### Create `BOOKSTORE` Schema in Datasource
 
-TBD
+Nothing to do. The H2 JDBC URL creates the `BOOKSTORE` schema on startup (`INIT=CREATE SCHEMA IF NOT EXISTS BOOKSTORE`) and Hibernate drops and recreates the tables on each start.
+Put seed data in `src/main/resources/import.sql`.
+
+### Logging
+
+Use JBoss Logging, the Quarkus standard:
+
+```java
+private static final Logger LOG = Logger.getLogger(MyClass.class); // org.jboss.logging.Logger
+LOG.debugf("Loaded %d books", books.size());
+```
+
+Log levels are set with `quarkus.log.*` in `application.properties` (`com.ksm` logs at `DEBUG` in dev mode).
