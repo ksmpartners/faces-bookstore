@@ -14,7 +14,7 @@ It is also intended as an evaluation vehicle to gauge a developer’s understand
 
 ### Overview
 
-You will be building an online bookstore for PJM. The PJM Bookstore consists of the following functional components:
+You will be building an online bookstore for KSM. The KSM Bookstore consists of the following functional components:
 
 - A public front end allowing users to browse the store inventory.
 - A simple checkout process allowing the user to purchase books.
@@ -88,7 +88,7 @@ A data flow diagram in the starter material illustrates how data moves between d
 ### Security Requirements
 
 - Only the administrative functionality requires authentication and authorization.  
-- Security should be implemented using JAAS; it is acceptable to use Wildfly `.properties` files or the default security domain.  
+- Security should be implemented using Quarkus security (FORM login is pre-configured with embedded users in `application.properties`).  
 - Returning users do not need to authenticate; providing an email address is sufficient for this pseudo application.  
 - Secured pages and functionality must not be accessible without proper authentication and authorization.  
 
@@ -105,11 +105,11 @@ A starter project is provided that includes the necessary dependencies. Addition
 - Maven  
 - CDI  
 - JPA (Persistence/Hibernate)  
-- JSF 2.3  
+- JSF
 - PrimeFaces  
-- SLF4J  
-- H2 in-memory database (via the `ExampleDS` data source)  
-- [WildFly 26](https://github.com/wildfly/wildfly/releases/download/26.1.3.Final/wildfly-26.1.3.Final.zip) application server  
+- JBoss Logging (`org.jboss.logging.Logger`, the Quarkus standard)  
+- H2 in-memory database (the default Quarkus datasource)  
+- Quarkus
 
 ## Development Guidelines
 
@@ -119,13 +119,13 @@ Developers are expected to follow the standard Web Developer guidelines, in part
 - Use of controllers, providers, DAOs, and other standard layers.  
 - Proper exception handling strategy.  
 
-Items that refer specifically to the PJM Tools Framework can be omitted for the purpose of this project; the focus here is on core CDI, JSF, JPA, and security concepts.
+Items that refer specifically to the KSM Tools Framework can be omitted for the purpose of this project; the focus here is on core CDI, JSF, JPA, and security concepts.
 
 ## The Starter Project
 
 An original version of this project is stored in Git. To start working:
 
-1. From the WebIDE, create a new branch from `master` that includes your name (for example, `yourname-bookstore`).
+1. From the WebIDE, create a new branch from `main` that includes your name (for example, `yourname-bookstore`).
 2. Clone your branch locally:
 
 ```bash
@@ -135,9 +135,8 @@ git checkout -b yourname-bookstore origin/yourname-bookstore
 ```
 
 3. Use `git branch --list` or `git status` to verify that you are on the correct branch.  
-4. Import the project into Eclipse as an existing Maven project.  
-5. The project should build and deploy to a stock [WildFly 26](https://github.com/wildfly/wildfly/releases/download/26.1.3.Final/wildfly-26.1.3.Final.zip) standalone configuration. It is configured to use the existing `ExampleDS` data source and the `other` security domain.  
-6. In the project `pom.xml`, update the PrimeFaces dependency to the latest version available internally.  
+4. Import the project into your IDE as an existing Maven project.  
+5. The project should run using `mvn quarkus:dev`
 
 ## Evaluation
 
@@ -167,38 +166,30 @@ This provides constructive feedback and helps leadership evaluate the developer�
 
 ## Local Development – Setup
 
-### Wildfly Download
+### Add Users
 
-1. Open your browser and navigate to the internal Nexus location for Wildfly to download the latest server:  
-   [WildFly 26](https://github.com/wildfly/wildfly/releases/download/26.1.3.Final/wildfly-26.1.3.Final.zip)
-2. Expand the folder with the most recent version number and click on the ZIP file.  
-3. In the metadata panel, click the link for the **Path** attribute.  
-4. The latest Wildfly distribution will start downloading to your `Downloads` folder.  
-5. Once the download is finished, extract the contents to a directory of your choosing (for example, `C:\tools\wildfly-26`).  
+Users and roles are defined in `src/main/resources/application.properties` using Quarkus embedded users:
 
-### Add Users to JBoss
+| User  | Password | Roles          |
+|-------|----------|----------------|
+| admin | admin    | Admin, General |
+| user  | user     | General        |
 
-Follow the internal documentation for creating local users for development:  
-`https://confluence.KSM.com/display/DEV/Creating+local+Users+for+Development`
+Add more with `quarkus.security.users.embedded.users.<name>=<password>` and `quarkus.security.users.embedded.roles.<name>=<roles>`.
+Pages under `/pages/admin/*` require `Admin` and pages under `/pages/secure/*` require `General` (see `quarkus.http.auth.permission.*`).
 
 ### Create `BOOKSTORE` Schema in Datasource
 
-In `standalone.xml`, between the `<datasources>` and `</datasources>` tags, modify the connection URL for `ExampleDS` so that the `BOOKSTORE` schema is created automatically:
+Nothing to do. The H2 JDBC URL creates the `BOOKSTORE` schema on startup (`INIT=CREATE SCHEMA IF NOT EXISTS BOOKSTORE`) and Hibernate drops and recreates the tables on each start.
+Put seed data in `src/main/resources/import.sql`.
 
-```xml
-<datasource jndi-name="java:jboss/datasources/ExampleDS"
-            pool-name="ExampleDS"
-            enabled="true"
-            use-java-context="true"
-            statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
-  <connection-url>
-    jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS BOOKSTORE;
-  </connection-url>
-  <driver>h2</driver>
-  <security>
-    <user-name>sa</user-name>
-    <password>sa</password>
-  </security>
-</datasource>
+### Logging
+
+Use JBoss Logging, the Quarkus standard:
+
+```java
+private static final Logger LOG = Logger.getLogger(MyClass.class); // org.jboss.logging.Logger
+LOG.debugf("Loaded %d books", books.size());
 ```
 
+Log levels are set with `quarkus.log.*` in `application.properties` (`com.ksm` logs at `DEBUG` in dev mode).

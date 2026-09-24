@@ -1,6 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="jakarta.tags.core"
+	xmlns:ui="jakarta.faces.facelets"
+	xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core"
+	xmlns:p="primefaces"
+	xmlns:pe="primefaces.extensions"
 	template="/pages/layouts/customer-template.xhtml">
 
     <h:head>
@@ -8,7 +13,7 @@
     </h:head>
  	<ui:define name="body">
         <h2>Hello, please log in:</h2>
-        <form name="loginForm" method="post" action="j_security_check">
+        <form name="loginForm" method="post" action="#{request.contextPath}/j_security_check">
             <p><strong>Please type your user name: </strong>
                 <input type="text" name="j_username" size="25"/></p>
             <p><strong>Please type your password: </strong>
@@ -16,6 +21,6 @@
             <p>
                 <input type="submit" value="Submit"/>
                 <input type="reset" value="Reset"/></p>
-        </form>       
+        </form>
 	</ui:define>
 </ui:composition>
